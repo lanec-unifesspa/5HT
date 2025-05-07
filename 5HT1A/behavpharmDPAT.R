@@ -210,3 +210,18 @@ dabest_DPAT_SN_sp <- load(data = DPAT_SN, x = Group, y = Speed, idx = c("CTRL", 
 
 #Plot
 dabest_plot(dabest_DPAT_SN_sp, TRUE, swarm_label = "Swimming speed (cm/s)", swarm_ylim = c(0, 12))
+
+#Load dataset for receptor reserve
+DPAT_reserve <- read_csv("https://raw.githubusercontent.com/lanec-unifesspa/5HT/refs/heads/main/5HT1A/DPAT_reserve.csv", col_types = cols(`8-OH-DPAT dose (mg/kg)` = col_factor(levels = c("0.00", "0.03", "0.30", "3.00")), `WAY 100,635 dose (mg/kg)` = col_factor(levels = c("0.000", "0.001"))))
+View(DPAT_reserve)
+
+#Run two-way ANOVA on "Geotaxis"
+anova_reserve <- aov(DPAT_reserve$`Geotaxis (s)` ~ DPAT_reserve$`8-OH-DPAT dose (mg/kg)`:DPAT_reserve$`WAY 100,635 dose (mg/kg)`, data = DPAT_reserve)
+summary(anova_reserve)
+TukeyHSD(anova_reserve)
+
+#Create object for plotting
+dabest_DPAT_reserve_ps <- load(data = DPAT_reserve_longform, x = Group, y = `Geotaxis (s)`, idx = list(c("0.00_0.000", "0.00_0.001"), c("0.03_0.000", "0.03_0.001"), c("0.30_0.000", "0.30_0.001"), c("3.00_0.000", "3.00_0.001"))) %>% cohens_d()
+
+#Plot
+dabest_plot(dabest_DPAT_reserve_ps, TRUE, swarm_label = "Geotaxis (s)", swarm_ylim = c(0, 360), contrast_ylim = c(-2, 7))
