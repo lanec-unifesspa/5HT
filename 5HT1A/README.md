@@ -1,0 +1,1 @@
+The "Reserve" folder contains data and analysis scripts for experiments on the effects of 8-OH-DPAT on the novel tank test, light/dark test, and social preference in zebrafish.  The folder named "SocialStress" contains data on the effects of 8-OH-DPAT on anxiety-like behavior in zebrafish subjected to social stress.
